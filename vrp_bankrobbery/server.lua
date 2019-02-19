@@ -82,7 +82,7 @@ function vRPbankrob.tunnel:startRobbery(robb)
 			if(robbers[savedSource])then
 			  if user then
 				local reward = math.random(robbery.min,robbery.max)
-				user:tryGiveItem("dirty_money",reward,true) 
+				user:tryGiveItem("dirty_money",reward,false) 
 				TriggerClientEvent('chatMessage', -1, lang.title.news(), {255, 0, 0}, lang.robbery.over({robbery.name}))
 				TriggerClientEvent('chatMessage', savedSource, lang.title.system(), {255, 0, 0}, lang.robbery.done({reward}))
 				self.remote._robberyComplete(savedSource)
