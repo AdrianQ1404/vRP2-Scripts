@@ -43,7 +43,7 @@ cfg.bankrobbery = { -- list of robberies
 	["fleeca3"] = { 
 	  name = "Fleeca Bank (Rockford Hills)", 
 	  pos = {-1212.2568359375, -336.128295898438, 36.7907638549805}, 
-	  dist = 15.0, rob = 360, wait = 2700, cops = 0, stars = 2, min = 100000, max = 200000
+	  dist = 15.0, rob = 360, wait = 2700, cops = 4, stars = 2, min = 100000, max = 200000
 	},
 	["fleeca6"] = { 
 	  name = "Fleeca Bank (Desert)", 
