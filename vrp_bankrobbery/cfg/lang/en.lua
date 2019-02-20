@@ -1,27 +1,17 @@
+
 local lang = {
-  blip = "Robbery",
-  cops = {
-    cant_rob = "~r~Cop robbing stores, you bonkers!!!",
-	not_enough = "~r~You need at least {1} cops online"
-  },
-  robbery = {
+
+robbery = {
 	wait = "This has already been robbed recently. Please wait another: ^2{1}^0 seconds.",
-	progress = "Robbery in progress at ^2{1}",
-	started = "You started a robbery at: ^2{1}^0, do not get too far away from this point!",
-	hold = "Hold the fort for ^1{1} ^0minutes and the money is yours!",
-	over = "Robbery is over at: ^2{1}^0!",
+	progress = "Robbery in progress at {1}",
+	complete = "BREAKING NEWS: Bank Robbers have sucessfully robbed the {1}, it is unclear if they got away tho the bank has confirmed $",
+	hold = "You started a Robbery - Hold the fort for ^1{1} ^0minutes and the money is yours!",
 	canceled = "Robbery was cancelled!",
-	done = "Robbery done, you received: ^2{1}^0!"
-  },
-  title = {
-    robbery = "ROBBERY",
-	news = "NEWS",
-	system = "SYSTEM"
-  },
-  client = {
+	title_robbery = "ROBBERY ",
 	rob = "Press ~INPUT_RELOAD~ to rob ~b~{1}~w~ beware, the police will be alerted!",
-    robbing = "Robbing: ~r~{1}~w~ seconds remaining",
-	canceled = "The robbery was cancelled!"
+    	robbing = "Robbing: ~r~{1}~w~ seconds remaining",
+    	cant_rob = "~r~Cops are not allowed to rob!",
+	not_enough = "~r~You need at least {1} cops online"
   }
 }
 

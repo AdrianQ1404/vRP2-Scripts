@@ -12,6 +12,10 @@ cfg = module("vrp_bankrobbery", "cfg/bankrobbery")
 
 lang = module("vrp_bankrobbery", "cfg/lang/"..cfg.lang)
 
+local cooldown = 0
+local ispriority = false
+local ishold = false
+
 robb = ""
 timer = 0
 robbing = false
@@ -35,38 +39,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
-Citizen.CreateThread(function()
-	while true do
-	  if wanted then
-	    if not vRP.EXT.Survival.remote._isInComa() then
-		  local pos = GetEntityCoords(GetPlayerPed(-1), true)
-		  local r = cfg.bankrobbery[wanted]
-		  if(Vdist(pos.x, pos.y, pos.z, r.pos[1], r.pos[2], r.pos[3]) < r.dist)then
-		    SetPlayerWantedLevel(PlayerId(), r.stars, 0)
-		    SetPlayerWantedLevelNow(PlayerId(), 0)
-		  else
-		    wanted = false
-		  end
-		end
-	  end
-	  Citizen.Wait(0)
-	end
-end)
-
-if cfg.blips then -- blip settings
-  Citizen.CreateThread(function()
-	for k,v in pairs(cfg.bankrobbery)do
-		local blip = AddBlipForCoord(v.pos[1], v.pos[2], v.pos[3])
-		SetBlipSprite(blip, cfg.blipid)
-		SetBlipScale(blip, cfg.blipsz)
-		SetBlipColour(blip, cfg.blipcr)
-		SetBlipAsShortRange(blip, true)
-		BeginTextCommandSetBlipName("STRING")
-		AddTextComponentString(lang.blip)
-		EndTextCommandSetBlipName(blip)
-	end
-  end)
-end
 
 Citizen.CreateThread(function()
 	while true do
@@ -75,15 +47,14 @@ Citizen.CreateThread(function()
 		if robbing then
 			wanted = robb
 
-			robbery_drawTxt(0.66, 1.44, 1.0,1.1,0.4, string.gsub(lang.client.robbing, "{1}", timer), 255, 255, 255, 255)
-			
+			robbery_drawTxt(0.66, 1.44, 1.0,1.1,0.4, string.gsub(lang.robbery.robbing, "{1}", timer), 255, 255, 255, 255)
+			local ped = GetPlayerPed(-1)
+     			local health = GetEntityHealth(ped)
 			local pos2 = cfg.bankrobbery[robb].pos
 			local dist = cfg.bankrobbery[robb].dist
-
 			local ped = GetPlayerPed(-1)
 			
-            if IsEntityDead(ped) or (Vdist(pos.x, pos.y, pos.z, pos2[1], pos2[2], pos2[3]) > dist)then
-				TriggerEvent('chatMessage', lang.title.system, {255, 0, 0}, lang.client.canceled)
+            		if health == 120 or health < 120 or (Vdist(pos.x, pos.y, pos.z, pos2[1], pos2[2], pos2[3]) > dist) then
 				
 				self.remote._cancelRobbery(robb)
 				robb = ""
@@ -92,13 +63,13 @@ Citizen.CreateThread(function()
 				incircle = false
 			end
 		else
-			for k,v in pairs(cfg.bankrobbery)do
-				if(Vdist(pos.x, pos.y, pos.z, v.pos[1], v.pos[2], v.pos[3]) < v.dist)then
+			for k,v in pairs(cfg.bankrobbery) do
+				if(Vdist(pos.x, pos.y, pos.z, v.pos[1], v.pos[2], v.pos[3]) < v.dist) then
 					DrawMarker(1, v.pos[1], v.pos[2], v.pos[3] - 1, 0, 0, 0, 0, 0, 0, 1.0001, 1.0001, 0.5001, 255, 0, 0,255, 0, 0, 0,0)
 					
 					if(Vdist(pos.x, pos.y, pos.z, v.pos[1], v.pos[2], v.pos[3]) < 2.0)then
 						if (incircle == false) then
-							robbery_DisplayHelpText(string.gsub(lang.client.rob, "{1}", v.name))
+							robbery_DisplayHelpText(string.gsub(lang.robbery.rob, "{1}", v.name))
 						end
 						incircle = true
 						if(IsControlJustReleased(1, cfg.key))then
@@ -106,6 +77,9 @@ Citizen.CreateThread(function()
 							timer = v.rob
 							robbing = true
 							self.remote._startRobbery(robb)
+							SetPlayerWantedLevel(PlayerId(), 2, 0)
+		    					SetPlayerWantedLevelNow(PlayerId(), 0)
+
 						end
 					elseif(Vdist(pos.x, pos.y, pos.z, v.pos[1], v.pos[2], v.pos[3]) > 2.0)then
 						incircle = false
@@ -117,11 +91,16 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 	end
 end)
+
 end
+
+-- TUNNEL
+vRPbankrob.tunnel = {}
 
 
 
 function vRPbankrob:robberyComplete()
+        self.coma = false
 	robb = ""
 	timer = 0
 	robbing = false
