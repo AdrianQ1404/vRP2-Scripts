@@ -38,7 +38,7 @@ cfg.bankrobbery = { -- list of robberies
  	_config = {x = -1212.25, y = -336.12, z = 36.79, map_entity = {"PoI", {blip_id = 431, blip_color = 1}}},
 	  name = "Fleeca Bank (Rockford Hills)", 
 	  pos = {-1212.2568359375, -336.128295898438, 36.7907638549805}, 
-	  dist = 15.0, rob = 360, wait = 2700, cops = 0, min = 100000, max = 200000
+	  dist = 15.0, rob = 360, wait = 2700, cops = 4, min = 100000, max = 200000
 	},
 	["fleeca6"] = { 
  	_config = {x = 1176.86, y = 2711.91, z = 38.09, map_entity = {"PoI", {blip_id = 431, blip_color = 1}}},

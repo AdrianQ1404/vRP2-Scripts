@@ -93,7 +93,7 @@ function vRPbankrob.tunnel:startRobbery(robb, x,y,z)
 		  robbers[player] = robb
 
 		local x,y,z = vRP.EXT.Base.remote.getPosition(user.source)
-		vRP.EXT.Phone:sendServiceAlert(nil, "emergency" ,x,y,z, lang.robbery.progress({robbery.name})) -- send service alert (call request)
+		vRP.EXT.Phone:sendServiceAlert(nil, "police" ,x,y,z, lang.robbery.progress({robbery.name})) -- send service alert (call request)
 		vRP.EXT.Base.remote._notifyPicture(user.source, "CHAR_LESTER", 1, "WARNING:", "Silent Alarm Triggered", "The police were alerted!")
 		  local savedSource = player
 		  SetTimeout(robbery.rob*1000, function()
