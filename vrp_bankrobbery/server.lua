@@ -55,6 +55,7 @@ function vRPbankrob.tunnel:cancelRobbery(robb)
 	if(robbers[source])then
 	robbers[source] = nil
 	canceled = true
+	vRP.EXT.Audio.remote._removeAudioSource(-1, "Alarm")
 	TriggerClientEvent('chatMessage', player, lang.robbery.title_robbery(), {255, 0, 0}, lang.robbery.canceled())
 		
 	end
@@ -93,10 +94,14 @@ function vRPbankrob.tunnel:startRobbery(robb, x,y,z)
 		  robbers[player] = robb
 
 		local x,y,z = vRP.EXT.Base.remote.getPosition(user.source)
+		local audio = "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-25674/zapsplat_emergency_alarm_siren_002_26608.mp3"
 		vRP.EXT.Phone:sendServiceAlert(nil, "police" ,x,y,z, lang.robbery.progress({robbery.name})) -- send service alert (call request)
-		vRP.EXT.Base.remote._notifyPicture(user.source, "CHAR_LESTER", 1, "WARNING:", "Silent Alarm Triggered", "The police were alerted!")
+		vRP.EXT.Base.remote._notifyPicture(user.source, "CHAR_LESTER", 1, "WARNING", "Alarm Triggered", "The police were alerted!")
+		vRP.EXT.Audio.remote._setAudioSource(-1, "Alarm", audio, 0.5, x,y,z, 75)
+
 		  local savedSource = player
 		  SetTimeout(robbery.rob*1000, function()
+			vRP.EXT.Audio.remote._removeAudioSource(-1, "Alarm")
 			if(robbers[savedSource])then
 			  if user then
 				local reward = math.random(robbery.min,robbery.max)

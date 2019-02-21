@@ -16,5 +16,5 @@ client_scripts{
 
 files{
   "cfg/bankrobbery.lua",
-  "cfg/lang/en.lua" -- add your lang here
+  "cfg/lang/en.lua"
 }
