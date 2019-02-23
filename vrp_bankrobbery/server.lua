@@ -94,10 +94,10 @@ function vRPbankrob.tunnel:startRobbery(robb, x,y,z)
 		  robbers[player] = robb
 
 		local x,y,z = vRP.EXT.Base.remote.getPosition(user.source)
-		local audio = "https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-25674/zapsplat_emergency_alarm_siren_002_26608.mp3"
+		local audio = "https://s0.vocaroo.com/media/download_temp/Vocaroo_s0uuSMNZWD3B.mp3"
 		vRP.EXT.Phone:sendServiceAlert(nil, "police" ,x,y,z, lang.robbery.progress({robbery.name})) -- send service alert (call request)
 		vRP.EXT.Base.remote._notifyPicture(user.source, "CHAR_LESTER", 1, "WARNING", "Alarm Triggered", "The police were alerted!")
-		vRP.EXT.Audio.remote._setAudioSource(-1, "Alarm", audio, 0.5, x,y,z, 75)
+		vRP.EXT.Audio.remote._setAudioSource(-1, "Alarm", audio, 0.1, x,y,z, 80)
 
 		  local savedSource = player
 		  SetTimeout(robbery.rob*1000, function()
